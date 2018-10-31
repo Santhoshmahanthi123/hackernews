@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const path = require('path')
 const mongoose = require('mongoose');
@@ -12,7 +13,13 @@ const app = express();
 //load routes
 const ideas = require('./routes/ideas')
 const users = require('./routes/users')
-const port = process.env.PORT | 3010;
+const port = process.env.PORT || 3010;
+
+const DBUSER = process.env.DBUSER;
+const DBPASSWORD = process.env.DBPASSWORD;
+const DBURL = process.env.DBURL;
+console.log(DBUSER);
+console.log(DBPASSWORD)
 //passport config
 
 require('./config/passport')(passport);
@@ -22,7 +29,7 @@ require('./config/passport')(passport);
 //Map global promise - get rid of warning
 
 //connect to mongoose
-mongoose.connect('mongodb://localhost:27017/Hackernews',{
+mongoose.connect(DBURL,{
     useNewUrlParser: true
 })
 .then(() => console.log('mongoDB connected...'))
